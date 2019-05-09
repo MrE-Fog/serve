@@ -3,7 +3,7 @@ package main
 import "net/http"
 
 // withBasicAuth adds a basic authentication middleware before the passed handler.
-func withBasicAuth(next http.Handler) http.Handler {
+func withBasicAuth(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		username, password, ok := r.BasicAuth()
 		if !ok {
