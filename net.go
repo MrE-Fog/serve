@@ -89,3 +89,44 @@ func lanIP() (string, error) {
 	}
 	return fav, nil
 }
+
+type statusWriter struct {
+	http.ResponseWriter
+	status int
+	length int
+}
+
+func (w *statusWriter) WriteHeader(status int) {
+	w.status = status
+	w.ResponseWriter.WriteHeader(status)
+}
+
+func (w *statusWriter) Write(b []byte) (int, error) {
+	if w.status == 0 {
+		w.status = 200
+	}
+	n, err := w.ResponseWriter.Write(b)
+	w.length += n
+	return n, err
+}
+
+func withTracing(next http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		response := &statusWriter{ResponseWriter: w}
+		next.ServeHTTP(response, r)
+		defer log.Printf("%s [%s] %q %s %d %d %q", r.RemoteAddr, r.Method, r.RequestURI, r.Proto, response.status, response.length, r.Header.Get("User-Agent"))
+	}
+}
+
+func recoverHandler(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if err := recover(); err != nil {
+				log.Printf("panic: %+v", err)
+				http.Error(w, http.StatusText(500), 500)
+			}
+		}()
+
+		next.ServeHTTP(w, r)
+	}
+}
