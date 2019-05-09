@@ -115,7 +115,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	finalHandler := http.FileServer(http.Dir(*directory))
+	finalHandler := recoverHandler(withTracing(http.FileServer(http.Dir(*directory))))
 
 	// If the "-a" flag was used, use basic authentication middleware
 	if *auth != "" {
