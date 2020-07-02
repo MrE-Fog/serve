@@ -1,7 +1,11 @@
 serve
 =====
 
-[![Build Status](https://travis-ci.org/philippgille/serve.svg?branch=master)](https://travis-ci.org/philippgille/serve/branches) [![Build status](https://ci.appveyor.com/api/projects/status/nt16vsv7j1yk9yo2/branch/master?svg=true)](https://ci.appveyor.com/project/philippgille/serve/branch/master) [![Go Report Card](https://goreportcard.com/badge/github.com/philippgille/serve)](https://goreportcard.com/report/github.com/philippgille/serve) [![GitHub Releases](https://img.shields.io/github/release/philippgille/serve.svg)](https://github.com/philippgille/serve/releases)
+Windows | macOS | Linux
+--------|-------|------
+[![Build status](https://ci.appveyor.com/api/projects/status/nt16vsv7j1yk9yo2/branch/master?svg=true)](https://ci.appveyor.com/project/philippgille/serve/branch/master) | [![Build Status](https://travis-ci.org/philippgille/serve.svg?branch=master)](https://travis-ci.org/philippgille/serve/branches) | [![CircleCI](https://circleci.com/gh/philippgille/serve.svg?style=svg)](https://circleci.com/gh/philippgille/serve)
+
+[![GitHub Releases](https://img.shields.io/github/release/philippgille/serve.svg)](https://github.com/philippgille/serve/releases)
 
 `serve` starts a simple temporary static file server in your current directory and prints your IP address to share with colleagues.
 
@@ -202,7 +206,7 @@ So now you can only build the Snap package on Linux, using the following steps:
 1. `snap install snapcraft --classic`
 2. `snapcraft`
 
-Depending on the current `serve` version and your CPU's architecture it will create a file like `serve_0.3.0_amd64.snap`, which can manually be installed with `snap install --dangerous serve_0.3.0_amd64.snap`.
+Depending on the current `serve` version and your CPU's architecture it will create a file like `serve_0.3.2_amd64.snap`, which can manually be installed with `snap install --dangerous serve_0.3.2_amd64.snap`.
 
 The Chocolatey packages need to be uploaded manually to Chocolatey [here](https://chocolatey.org/packages/upload). The package can be built with this script:
 
@@ -228,4 +232,6 @@ Related projects
   - Con: Too many features ("[feature creep](https://en.wikipedia.org/wiki/Feature_creep)")? Many dependencies.
 - [https://github.com/syntaqx/serve](https://github.com/syntaqx/serve)
   - Con: No option to require authentication, no installation packages for Windows or Linux
+- [https://github.com/rhardih/serve](https://github.com/rhardih/serve)
+  - Con: No option to require authentication, no installation packages, no HTTPS when _not_ using HTTP/2, when using HTTP/2 the certificate and private key are written to disk in the current working directory, *which is served by default*, so an attacker can easily download and use them in a Man-in-the-Middle attack without the client noticing (because it's the correct certificate) (as of 2019-05-05 - I created [an issue](https://github.com/rhardih/serve/issues/3) for that and hope it gets fixed soon)
 - Many others!

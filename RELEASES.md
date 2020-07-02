@@ -8,6 +8,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 vNext
 -----
 
+v0.3.2 (2019-07-20)
+-------------------
+
+> Note: Windows and Linux users who have `serve` v0.3.0 don't need to update to this version, because it only fixes a bug in v0.3.1 and v0.3.1 only contained a bugfix for macOS.
+
+- Fixed: serve v0.3.1 reports version v0.3.0 when using `serve -v`
+
+v0.3.1 (2019-07-20)
+-------------------
+
+> Note: This release only contains a bugfix for macOS. There's no need to update from v0.3.0 to this version on Windows or Linux.
+
+- Fixed: `serve` crashes at start on macOS due to a bug in UPX, which is used to compress the executable file ([issue #27](https://github.com/philippgille/serve/issues/27))
+  - See [https://github.com/upx/upx/issues/222](https://github.com/upx/upx/issues/222)
+  - Only macOS is affected!
+
 v0.3.0 (2019-05-04)
 -------------------
 

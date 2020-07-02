@@ -33,7 +33,8 @@ GOOS=linux GOARCH=amd64 go build -v -o "${ARTIFACTSDIR}/serve_v${VERSION}_Linux_
 # Requires UPX to be installed (for example with "apt install upx-ucl").
 if [[ "$NO_UPX" == "false" ]]; then
     upx --ultra-brute "${ARTIFACTSDIR}/serve_v${VERSION}_Windows_x64/serve.exe"
-    upx --ultra-brute "${ARTIFACTSDIR}/serve_v${VERSION}_macOS_x64/serve"
+    # Leads to a broken executable when using UPX v3.95. See https://github.com/upx/upx/issues/222.
+    #upx --ultra-brute "${ARTIFACTSDIR}/serve_v${VERSION}_macOS_x64/serve"
     upx --ultra-brute "${ARTIFACTSDIR}/serve_v${VERSION}_Linux_x64/serve"
 fi
 
@@ -41,7 +42,7 @@ fi
 declare -a arr=("Windows" "macOS" "Linux")
 for MYOS in "${arr[@]}"
 do
-    # Sleep to prevent: tar: serve_v0.3.0_macOS_x64: file changed as we read it
+    # Sleep to prevent: tar: serve_v0.3.2_macOS_x64: file changed as we read it
     sleep 1s
     tar -czf "${ARTIFACTSDIR}/serve_v${VERSION}_${MYOS}_x64.tar.gz" -C "${ARTIFACTSDIR}" "serve_v${VERSION}_${MYOS}_x64"
 done
